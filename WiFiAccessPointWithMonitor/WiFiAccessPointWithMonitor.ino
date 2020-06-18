@@ -13,6 +13,9 @@ SSD1306Spi display(D0, D2, D8);  // RES, DC, CS
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
+#include <iostream>
+#include <fstream>
+#include <string>
 
 #ifndef APSSID
 #define APSSID "LocalAccess-2.4GHz"
@@ -30,7 +33,22 @@ ESP8266WebServer server(80);
 */
 void handleRoot() 
 {
-  server.send(200, "text/html", "<h1>You are connected</h1>");
+  std::string line;
+  std::ifstream in("webif.html");
+  if (in.is_open())
+    {
+        while (getline(in, line))
+        {
+            std::cout << line << std::endl;
+        }
+    }
+    in.close();
+    
+  char *html_str = new char[line.length() + 1];
+  strcpy(html_str, line.c_str());
+  
+  server.send(200, "text/html", html_str);
+  //server.send(200, "text/html", "<h1>"
 }
 
 // SSD1306Spi output function
@@ -43,6 +61,8 @@ void infoOutput(const char *ssid, const char *password)
     display.drawString(0, 10, ssid);
     display.drawString(0, 20, "Password: ");
     display.drawString(0, 30, password);
+    display.drawString(0, 40, "Web interface: ");
+    display.drawString(0, 50, "192.168.4.1");
     
 }
 
