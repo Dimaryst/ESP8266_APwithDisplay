@@ -20,35 +20,24 @@ SSD1306Spi display(D0, D2, D8);  // RES, DC, CS
 #ifndef APSSID
 #define APSSID "LocalAccess-2.4GHz"
 #define APPSK  "whosyourdaddy"
+#define APWS "<div id=\"center\"><h1 text-align: center>WiFi Access point</h1><br><h2>Now you're connected to LocalAccess-2.4Ghz</h2><br></div>"
 #endif
 
 /* Set these to your desired credentials. */
 const char *ssid = APSSID;
 const char *password = APPSK;
+const char *webif = APWS;
 
 ESP8266WebServer server(80);
 
 /* Just a little test message.  Go to http://192.168.4.1 in a web browser
    connected to this access point to see it.
 */
+
 void handleRoot() 
 {
-  std::string line;
-  std::ifstream in("webif.html");
-  if (in.is_open())
-    {
-        while (getline(in, line))
-        {
-            std::cout << line << std::endl;
-        }
-    }
-    in.close();
-    
-  char *html_str = new char[line.length() + 1];
-  strcpy(html_str, line.c_str());
-  
-  server.send(200, "text/html", html_str);
-  //server.send(200, "text/html", "<h1>"
+  server.send(200, "text/html", webif);
+  server.send(200, "text/html", "<h1>WiFi Access point</h1>";
 }
 
 // SSD1306Spi output function
