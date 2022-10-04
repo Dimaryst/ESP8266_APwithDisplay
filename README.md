@@ -8,5 +8,5 @@ D1 (Green) - D1/MOSI/D7.
 Res (Grey) - DX<-D0.   
 DC (White) - D14/SDA/D1.   
 CS (Grey) - GND.   
-    
-![Example](/WiFiAccessPointWithMonitor/connection_example.JPG)
+
+<img src="/WiFiAccessPointWithMonitor/connection_example.JPG" width="200" height="200"/>
